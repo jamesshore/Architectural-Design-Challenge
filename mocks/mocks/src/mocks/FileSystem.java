@@ -1,7 +1,12 @@
 package mocks;
 
+import java.io.IOException;
+
 public interface FileSystem {
 
-	public void saveFile(String filename, String contents);
+	public void createFile(String filename, String contents) throws IOException;
+	public boolean fileExists(String string);
+	public void deleteFile(String filename);
+	public String readFile(String filename);
 
 }

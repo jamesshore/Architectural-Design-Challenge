@@ -1,5 +1,7 @@
 package mocks;
 
+import java.io.IOException;
+
 public class Rot13String {
 
 	private String _string;
@@ -22,8 +24,8 @@ public class Rot13String {
 		return new Rot13String(result);
 	}
 
-	public void saveTo(String filename) {
-		_fileSystem.saveFile(filename, _string);		
+	public void saveTo(String filename) throws IOException {
+		_fileSystem.createFile(filename, _string);		
 	}
 
 	private char transformChar(char c) {

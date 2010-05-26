@@ -2,6 +2,8 @@ package mocks;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
@@ -11,7 +13,7 @@ import org.junit.runner.RunWith;
 
 @RunWith(JMock.class)
 public class _Rot13StringTest {
-	Mockery context = new JUnit4Mockery();
+	private Mockery _mockery = new JUnit4Mockery();
 		
 	@Test
 	public void transform() {
@@ -23,12 +25,12 @@ public class _Rot13StringTest {
 	}
 	
 	@Test
-	public void saveTo() {
-		final FileSystem fileSystem = context.mock(FileSystem.class);
+	public void saveTo() throws IOException {
+		final FileSystem fileSystem = _mockery.mock(FileSystem.class);
 		Rot13String string = new Rot13String("abc", fileSystem);
 
-		context.checking(new Expectations() {{
-			oneOf (fileSystem).saveFile("filename", "abc");
+		_mockery.checking(new Expectations() {{
+			oneOf (fileSystem).createFile("filename", "abc");
 		}});
 
 		string.saveTo("filename");		
