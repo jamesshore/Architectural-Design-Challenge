@@ -17,7 +17,9 @@ public class Rot13String {
 	}
 
 	private char transformChar(char c) {
-		return (char)(c + 13);
+		if ((c >= 'a' && c <= 'm') || (c >= 'A' && c <= 'M')) return (char)(c + 13);
+		if ((c >= 'n' && c <= 'z') || (c >= 'N' && c <= 'Z')) return (char)(c - 13);
+		return c;
 	}
 
 	@Override
