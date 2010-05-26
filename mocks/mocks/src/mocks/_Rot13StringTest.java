@@ -30,7 +30,7 @@ public class _Rot13StringTest {
 		Rot13String string = new Rot13String("abc", fileSystem);
 
 		_mockery.checking(new Expectations() {{
-			oneOf (fileSystem).createFile("filename", "abc");
+			oneOf (fileSystem).writeFile("filename", "abc");
 		}});
 
 		string.saveTo("filename");		

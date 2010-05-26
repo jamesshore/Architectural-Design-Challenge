@@ -25,7 +25,7 @@ public class Rot13String {
 	}
 
 	public void saveTo(String filename) throws IOException {
-		_fileSystem.createFile(filename, _string);		
+		_fileSystem.writeFile(filename, _string);		
 	}
 
 	private char transformChar(char c) {
