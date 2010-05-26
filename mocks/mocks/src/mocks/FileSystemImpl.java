@@ -15,8 +15,9 @@ public class FileSystemImpl implements FileSystem {
 	@Override
 	public void createFile(String filename, String contents) throws IOException {
 		File file = new File(filename);
-		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+		BufferedWriter writer = null;
 		try {
+			writer = new BufferedWriter(new FileWriter(file));
 			writer.write(contents);
 		}
 		finally {
@@ -38,8 +39,9 @@ public class FileSystemImpl implements FileSystem {
 	@Override
 	public String readFile(String filename) throws IOException {
 		File file = new File(filename);
-		BufferedReader reader = new BufferedReader(new FileReader(file));
+		BufferedReader reader = null;
 		try {
+			reader = new BufferedReader(new FileReader(file));
 			String result = "";
 			int character = 0;
 			while ((character = reader.read()) != -1) {
