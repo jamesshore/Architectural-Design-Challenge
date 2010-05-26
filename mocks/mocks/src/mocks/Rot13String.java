@@ -8,12 +8,12 @@ public class Rot13String {
 		_string = string;
 	}
 
-	public String transform() {
+	public Rot13String transform() {
 		String result = "";
 		for (int i = 0; i < _string.length(); i++) {
 			result += transformChar(_string.charAt(i));
 		}
-		return result;
+		return new Rot13String(result);
 	}
 
 	private char transformChar(char c) {
@@ -45,5 +45,10 @@ public class Rot13String {
 		} else if (!_string.equals(other._string))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Rot13String [" + _string + "]";
 	}
 }
