@@ -10,7 +10,7 @@ public class _Rot13StringTest {
 	@Test
 	public void transform() {
 		Rot13String string = new Rot13String("abc");
-		assertEquals("transformed string", "mno", string.transform());
+		assertEquals("transformed string", "nop", string.transform());
 	}
 	
 	@Test

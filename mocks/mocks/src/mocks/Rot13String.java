@@ -3,13 +3,21 @@ package mocks;
 public class Rot13String {
 
 	private String _string;
-	
+
 	public Rot13String(String string) {
 		_string = string;
 	}
 
 	public String transform() {
-		return null;
+		String result = "";
+		for (int i = 0; i < _string.length(); i++) {
+			result += transformChar(_string.charAt(i));
+		}
+		return result;
+	}
+
+	private char transformChar(char c) {
+		return (char)(c + 13);
 	}
 
 	@Override
