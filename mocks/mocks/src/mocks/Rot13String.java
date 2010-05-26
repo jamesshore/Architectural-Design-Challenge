@@ -3,9 +3,15 @@ package mocks;
 public class Rot13String {
 
 	private String _string;
+	private FileSystem _fileSystem;
 
 	public Rot13String(String string) {
 		_string = string;
+	}
+
+	public Rot13String(String string, FileSystem fileSystem) {
+		this(string);
+		_fileSystem = fileSystem;
 	}
 
 	public Rot13String transform() {
@@ -14,6 +20,10 @@ public class Rot13String {
 			result += transformChar(_string.charAt(i));
 		}
 		return new Rot13String(result);
+	}
+
+	public void saveTo(String filename) {
+		_fileSystem.saveFile(filename, _string);		
 	}
 
 	private char transformChar(char c) {

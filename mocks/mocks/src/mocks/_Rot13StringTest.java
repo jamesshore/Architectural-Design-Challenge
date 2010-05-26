@@ -2,11 +2,17 @@ package mocks;
 
 import static org.junit.Assert.*;
 
-import org.junit.Ignore;
+import org.jmock.Expectations;
+import org.jmock.Mockery;
+import org.jmock.integration.junit4.JMock;
+import org.jmock.integration.junit4.JUnit4Mockery;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
+@RunWith(JMock.class)
 public class _Rot13StringTest {
-
+	Mockery context = new JUnit4Mockery();
+		
 	@Test
 	public void transform() {
 		assertTransform("nz", "am");
@@ -17,12 +23,15 @@ public class _Rot13StringTest {
 	}
 	
 	@Test
-	@Ignore
 	public void saveTo() {
-//		Rot13String string = new Rot13String(original);
-//		string.saveTo("directory");
-		
-		fail("mock-based assert goes here");
+		final FileSystem fileSystem = context.mock(FileSystem.class);
+		Rot13String string = new Rot13String("abc", fileSystem);
+
+		context.checking(new Expectations() {{
+			oneOf (fileSystem).saveFile("filename", "abc");
+		}});
+
+		string.saveTo("filename");		
 	}
 
 	private void assertTransform(String expected, String original) {
