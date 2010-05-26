@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 
+import org.junit.After;
 import org.junit.Test;
 
 public class _FileSystemTest {
@@ -11,17 +12,15 @@ public class _FileSystemTest {
 	private FileSystem _fileSystem = new FileSystemImpl();
 	private String _filename = "foo.txt";
 
+	public void foo() {
+		_fileSystem.deleteFile(_filename);
+	}
+
 	@Test
 	public void fileExists() throws IOException {
-		try {
-			assertFalse("file should not exist", _fileSystem
-					.fileExists(_filename));
-			_fileSystem.createFile(_filename, "contents");
-			assertTrue("file should exist", _fileSystem.fileExists(_filename));
-		}
-		finally {
-			_fileSystem.deleteFile(_filename);
-		}
+		assertFalse("file should not exist", _fileSystem.fileExists(_filename));
+		_fileSystem.createFile(_filename, "contents");
+		assertTrue("file should exist", _fileSystem.fileExists(_filename));
 	}
 
 	@Test
@@ -33,13 +32,13 @@ public class _FileSystemTest {
 
 	@Test
 	public void createFile() throws IOException {
-		try {
-			_fileSystem.createFile(_filename, "foo");
-			String actual = _fileSystem.readFile(_filename);
-			assertEquals("foo", actual);
-		}
-		finally {
-			_fileSystem.deleteFile(_filename);
-		}
+		_fileSystem.createFile(_filename, "foo");
+		assertEquals("foo", _fileSystem.readFile(_filename));
+	}
+	
+	@Test
+	public void readFile() throws IOException {
+		_fileSystem.createFile(_filename, "foo\nbar");
+		assertEquals("foo\nbar", _fileSystem.readFile(_filename));
 	}
 }
