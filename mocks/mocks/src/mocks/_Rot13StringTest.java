@@ -38,7 +38,8 @@ public class _Rot13StringTest {
 
 	private void assertTransform(String expected, String original) {
 		Rot13String string = new Rot13String(original);
-		assertEquals(new Rot13String(expected), string.transform());
+		string.transform();
+		assertEquals(new Rot13String(expected), string);
 	}
 
 	@Test

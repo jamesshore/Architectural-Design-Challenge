@@ -16,12 +16,12 @@ public class Rot13String {
 		_fileSystem = fileSystem;
 	}
 
-	public Rot13String transform() {
+	public void transform() {
 		String result = "";
 		for (int i = 0; i < _string.length(); i++) {
 			result += transformChar(_string.charAt(i));
 		}
-		return new Rot13String(result);
+		_string = result;
 	}
 
 	public void saveTo(String filename) throws IOException {
