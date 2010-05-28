@@ -8,11 +8,11 @@ public class Rot13String {
 	private FileSystem _fileSystem;
 
 	public Rot13String(String string) {
-		_string = string;
+		this(string, new FileSystemImpl());
 	}
 
 	public Rot13String(String string, FileSystem fileSystem) {
-		this(string);
+		_string = string;
 		_fileSystem = fileSystem;
 	}
 

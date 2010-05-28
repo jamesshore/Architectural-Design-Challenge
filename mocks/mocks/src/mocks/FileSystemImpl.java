@@ -12,9 +12,8 @@ public class FileSystemImpl implements FileSystem {
 	@Override
 	public String readFile(String filename) throws IOException {
 		File file = new File(filename);
-		BufferedReader reader = null;
+		BufferedReader reader = new BufferedReader(new FileReader(file));
 		try {
-			reader = new BufferedReader(new FileReader(file));
 			String result = "";
 			int character = 0;
 			while ((character = reader.read()) != -1) {

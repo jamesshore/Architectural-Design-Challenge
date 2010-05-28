@@ -5,6 +5,10 @@ import java.io.IOException;
 public class Rot13StringFactory {
 
 	private FileSystem _fileSystem;
+
+	public Rot13StringFactory() {
+		this(new FileSystemImpl());
+	}
 	
 	public Rot13StringFactory(FileSystem fileSystem) {
 		_fileSystem = fileSystem;
