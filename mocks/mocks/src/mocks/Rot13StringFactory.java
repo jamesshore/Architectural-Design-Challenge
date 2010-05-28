@@ -11,7 +11,7 @@ public class Rot13StringFactory {
 	}
 
 	public Rot13String createFromFile(String filename) throws IOException {
-		//return new Rot13String(_fileSystem.readFile(filename));
+		return new Rot13String(_fileSystem.readFile(filename));
 	}
 
 }
