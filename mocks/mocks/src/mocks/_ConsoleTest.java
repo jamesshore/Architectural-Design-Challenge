@@ -11,7 +11,7 @@ public class _ConsoleTest {
 	@Test
 	public void write() {
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
-		Console console = new Console(new PrintStream(out));
+		Console console = new ConsoleImpl(new PrintStream(out));
 		console.write("foo");
 		assertEquals("foo", out.toString());
 	}

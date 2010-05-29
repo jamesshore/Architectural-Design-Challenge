@@ -2,20 +2,9 @@ package mocks;
 
 import java.io.IOException;
 
-public class Rot13StringFactory {
+public interface Rot13StringFactory {
 
-	private FileSystem _fileSystem;
-
-	public Rot13StringFactory() {
-		this(new FileSystemImpl());
-	}
-	
-	public Rot13StringFactory(FileSystem fileSystem) {
-		_fileSystem = fileSystem;
-	}
-
-	public Rot13String createFromFile(String filename) throws IOException {
-		return new Rot13String(_fileSystem.readFile(filename));
-	}
+	public abstract Rot13String createFromFile(String filename)
+			throws IOException;
 
 }

@@ -18,13 +18,13 @@ public class _Rot13StringFactoryTest {
 	@Test
 	public void createFromFile() throws IOException {
 		final FileSystem fileSystem = _mockery.mock(FileSystem.class);
-		Rot13StringFactory factory = new Rot13StringFactory(fileSystem);
+		Rot13StringFactory factory = new Rot13StringFactoryImpl(fileSystem);
 		
 		_mockery.checking(new Expectations() {{
 			oneOf (fileSystem).readFile("filename"); will(returnValue("abc"));
 		}});
 
 		Rot13String string = factory.createFromFile("filename");
-		assertEquals(new Rot13String("abc"), string);
+		assertEquals(new Rot13StringImpl("abc"), string);
 	}
 }

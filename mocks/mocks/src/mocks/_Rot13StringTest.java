@@ -27,26 +27,20 @@ public class _Rot13StringTest {
 	@Test
 	public void saveTo() throws IOException {
 		final FileSystem fileSystem = _mockery.mock(FileSystem.class);
-		Rot13String string = new Rot13String("abc", fileSystem);
+		Rot13String string = new Rot13StringImpl("abc", fileSystem);
 
 		_mockery.checking(new Expectations() {{
 			oneOf (fileSystem).writeFile("filename", "abc");
 		}});
 
-		string.saveTo("filename");		
-	}
-
-	private void assertTransform(String expected, String original) {
-		Rot13String string = new Rot13String(original);
-		string.transform();
-		assertEquals(new Rot13String(expected), string);
+		string.saveTo("filename");
 	}
 
 	@Test
 	public void equalsAndHashCode() {
-		Rot13String string1a = new Rot13String("abc");
-		Rot13String string1b = new Rot13String("abc");
-		Rot13String string2 = new Rot13String("def");
+		Rot13String string1a = new Rot13StringImpl("abc");
+		Rot13String string1b = new Rot13StringImpl("abc");
+		Rot13String string2 = new Rot13StringImpl("def");
 
 		assertEquals(string1a, string1b);
 		assertFalse(string1a.equals(string2));
@@ -54,7 +48,13 @@ public class _Rot13StringTest {
 	}
 	
 	@Test
-	public void testToString() {
-		assertEquals("Rot13String [foo]", new Rot13String("foo").toString());
+	public void getString() {
+		assertEquals("abc", new Rot13StringImpl("abc").getString());
+	}
+
+	private void assertTransform(String expected, String original) {
+		Rot13String string = new Rot13StringImpl(original);
+		string.transform();
+		assertEquals(new Rot13StringImpl(expected), string);
 	}
 }
