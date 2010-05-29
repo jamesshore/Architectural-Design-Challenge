@@ -29,7 +29,16 @@ public class UI {
 			_console.write(e.getLocalizedMessage());
 		}
 	}
-	
+		
+	public static void main(String[] args) {
+		main(args, System.out, Configuration.production());
+	}
+
+	public static void main(String[] args, PrintStream out, Configuration configuration) {
+		processArgs(args, out);
+		new UI(out, configuration).go(_inputFileName, _outputFileName);
+	}
+
 	private static void processArgs(String[] args, PrintStream out) {
 		if (args.length != 2) printUsageAndExit(out);		
 		_inputFileName = args[0];
@@ -40,14 +49,5 @@ public class UI {
 	private static void printUsageAndExit(PrintStream out) {
 		new ConsoleImpl(out).write("Usage info goes here");
 		System.exit(1);		
-	}
-	
-	public static void main(String[] args) {
-		main(args, System.out, Configuration.production());
-	}
-
-	public static void main(String[] args, PrintStream out, Configuration configuration) {
-		processArgs(args, out);
-		new UI(out, configuration).go(_inputFileName, _outputFileName);
 	}
 }
