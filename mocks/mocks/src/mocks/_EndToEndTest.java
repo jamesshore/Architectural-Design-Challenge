@@ -1,9 +1,13 @@
 package mocks;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -15,10 +19,13 @@ public class _EndToEndTest {
 	public void endToEnd() throws IOException {
 		String inputFile = "in.txt";
 		String outputFile = "out.txt";
+		String expectedOutput = "Gur qbt onexf ng zvqavtug.";
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		try {
 			_fileSystem.writeFile(inputFile, "The dog barks at midnight.");
-			UI.main(new String[] { inputFile, outputFile });
-			assertEquals("Gur qbt onexf ng zvqavtug.", _fileSystem.readFile(outputFile));
+			UI.main(new String[] { inputFile, outputFile }, new PrintStream(out));
+			assertEquals(expectedOutput, _fileSystem.readFile(outputFile));
+			assertEquals(expectedOutput, out.toString());
 		}
 		finally {
 			if (_fileSystem.fileExists(inputFile)) _fileSystem.deleteFile(inputFile);
@@ -28,6 +35,6 @@ public class _EndToEndTest {
 	
 	@Test
 	public void toDo() {
-		fail("(Also need to implement test vs. production config switch.)");
+		fail("Need to implement test vs. production config switch.");
 	}
 }

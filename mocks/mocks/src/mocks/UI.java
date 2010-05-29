@@ -1,15 +1,16 @@
 package mocks;
 
 import java.io.IOException;
+import java.io.PrintStream;
 
 public class UI {
 	private static String _inputFileName;
 	private static String _outputFileName;
-	private Console _console = new ConsoleImpl();
+	private Console _console;
 	private Rot13StringFactory _stringFactory;
 	
-	public UI() {
-		this(new ConsoleImpl(), new Rot13StringFactoryImpl());
+	public UI(PrintStream out) {
+		this(new ConsoleImpl(out), new Rot13StringFactoryImpl());
 	}
 	
 	public UI(Console console, Rot13StringFactory stringFactory) {
@@ -29,20 +30,24 @@ public class UI {
 		}
 	}
 	
-	public static void main(String[] args) {
-		processArgs(args);
-		new UI().go(_inputFileName, _outputFileName);
-	}
-	
-	private static void processArgs(String[] args) {
-		if (args.length != 2) printUsageAndExit();		
+	private static void processArgs(String[] args, PrintStream out) {
+		if (args.length != 2) printUsageAndExit(out);		
 		_inputFileName = args[0];
 		_outputFileName = args[1];
-		if (_inputFileName == null || _outputFileName == null) printUsageAndExit();                        
+		if (_inputFileName == null || _outputFileName == null) printUsageAndExit(out);                        
 	}
 
-	private static void printUsageAndExit() {
-		new ConsoleImpl().write("Usage info goes here");
+	private static void printUsageAndExit(PrintStream out) {
+		new ConsoleImpl(out).write("Usage info goes here");
 		System.exit(1);		
+	}
+	
+	public static void main(String[] args) {
+		main(args, System.out);
+	}
+
+	public static void main(String[] args, PrintStream out) {
+		processArgs(args, out);
+		new UI(out).go(_inputFileName, _outputFileName);
 	}
 }
