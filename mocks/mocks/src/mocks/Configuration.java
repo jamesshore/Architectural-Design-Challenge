@@ -11,7 +11,8 @@ public class Configuration {
 	}
 	
 	public static Configuration test() {
-		return new Configuration("temp");
+		String tempDir = System.getProperty("java.io.tmpdir");
+		return new Configuration(tempDir);
 	}
 	
 	private Configuration(String workingDirectory) {

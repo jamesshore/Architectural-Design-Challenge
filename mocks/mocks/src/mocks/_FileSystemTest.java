@@ -4,6 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.junit.After;
@@ -16,7 +17,7 @@ public class _FileSystemTest {
 
 	@Before
 	public void setup() {
-		_fileSystem = new FileSystemImpl();
+		_fileSystem = new FileSystemImpl(Configuration.test());
 	}
 	
 	@After
@@ -39,7 +40,7 @@ public class _FileSystemTest {
 	}
 
 	@Test
-	public void createFile() throws IOException {
+	public void writeFile() throws IOException {
 		_fileSystem.writeFile(_filename, "foo");
 		assertEquals("foo", _fileSystem.readFile(_filename));
 	}
@@ -48,5 +49,13 @@ public class _FileSystemTest {
 	public void readFile() throws IOException {
 		_fileSystem.writeFile(_filename, "foo\nbar");
 		assertEquals("foo\nbar", _fileSystem.readFile(_filename));
+	}
+	
+	@Test
+	public void everythingShouldUseConfiguredWorkingDirectory() throws IOException {
+		File fullPath = new File(Configuration.test().workingDirectory(), _filename);
+		fullPath.delete();
+		_fileSystem.writeFile(_filename, "junk");
+		assertTrue("should write file to test's working directory", fullPath.exists());
 	}
 }

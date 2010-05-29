@@ -13,14 +13,15 @@ import org.junit.Test;
 
 
 public class _EndToEndTest {
-	private FileSystem _fileSystem = new FileSystemImpl();
+	private Configuration _configuration = Configuration.test();
+	private FileSystem _fileSystem = new FileSystemImpl(Configuration.test());
 	private String inputFile = "in.txt";
 	private String outputFile = "out.txt";
 	
 	@After
 	public void teardown() {
-		if (_fileSystem.fileExists(inputFile)) _fileSystem.deleteFile(inputFile);
-		if (_fileSystem.fileExists(outputFile)) _fileSystem.deleteFile(outputFile);		
+		_fileSystem.deleteFile(inputFile);
+		_fileSystem.deleteFile(outputFile);		
 	}
 	
 	@Test
@@ -31,7 +32,7 @@ public class _EndToEndTest {
 		String expectedOutput = "Gur qbt onexf ng zvqavtug.";
 		ByteArrayOutputStream consoleOutput = new ByteArrayOutputStream();
 		
-		UI.main(new String[] { inputFile, outputFile }, new PrintStream(consoleOutput));
+		UI.main(new String[] { inputFile, outputFile }, new PrintStream(consoleOutput), _configuration);
 		assertEquals(expectedOutput, _fileSystem.readFile(outputFile));
 		assertEquals(expectedOutput, consoleOutput.toString());
 	}

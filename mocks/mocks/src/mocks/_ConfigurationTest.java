@@ -16,6 +16,7 @@ public class _ConfigurationTest {
 	
 	@Test
 	public void whenInTestMode() {
-		assertEquals(new File("temp"), Configuration.test().workingDirectory());
+		String tempDir = System.getProperty("java.io.tmpdir");
+		assertEquals(new File(tempDir), Configuration.test().workingDirectory());
 	}
 }

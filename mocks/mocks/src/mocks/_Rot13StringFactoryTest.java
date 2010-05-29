@@ -25,6 +25,6 @@ public class _Rot13StringFactoryTest {
 		}});
 
 		Rot13String string = factory.createFromFile("filename");
-		assertEquals(new Rot13StringImpl("abc"), string);
+		assertEquals(new Rot13StringImpl("abc", fileSystem), string);
 	}
 }

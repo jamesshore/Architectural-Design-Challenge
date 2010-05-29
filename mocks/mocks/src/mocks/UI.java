@@ -9,8 +9,8 @@ public class UI {
 	private Console _console;
 	private Rot13StringFactory _stringFactory;
 	
-	public UI(PrintStream out) {
-		this(new ConsoleImpl(out), new Rot13StringFactoryImpl());
+	public UI(PrintStream out, Configuration configuration) {
+		this(new ConsoleImpl(out), new Rot13StringFactoryImpl(new FileSystemImpl(configuration)));
 	}
 	
 	public UI(Console console, Rot13StringFactory stringFactory) {
@@ -22,7 +22,7 @@ public class UI {
 		try {
 			Rot13String string = _stringFactory.createFromFile(inputFilename);
 			string.transform();
-			string.saveTo(outputFilename);
+			string.saveAs(outputFilename);
 			_console.write(string.getString());
 		}
 		catch (IOException e) {
@@ -43,11 +43,11 @@ public class UI {
 	}
 	
 	public static void main(String[] args) {
-		main(args, System.out);
+		main(args, System.out, Configuration.production());
 	}
 
-	public static void main(String[] args, PrintStream out) {
+	public static void main(String[] args, PrintStream out, Configuration configuration) {
 		processArgs(args, out);
-		new UI(out).go(_inputFileName, _outputFileName);
+		new UI(out, configuration).go(_inputFileName, _outputFileName);
 	}
 }

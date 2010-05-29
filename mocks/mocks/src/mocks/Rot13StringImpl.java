@@ -7,10 +7,6 @@ public class Rot13StringImpl implements Rot13String {
 	private String _string;
 	private FileSystem _fileSystem;
 
-	public Rot13StringImpl(String string) {
-		this(string, new FileSystemImpl());
-	}
-
 	public Rot13StringImpl(String string, FileSystem fileSystem) {
 		_string = string;
 		_fileSystem = fileSystem;
@@ -24,7 +20,7 @@ public class Rot13StringImpl implements Rot13String {
 		_string = result;
 	}
 
-	public void saveTo(String filename) throws IOException {
+	public void saveAs(String filename) throws IOException {
 		_fileSystem.writeFile(filename, _string);		
 	}
 

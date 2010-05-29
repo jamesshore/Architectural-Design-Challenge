@@ -21,7 +21,7 @@ public class _UITest {
 		_mockery.checking(new Expectations() {{
 			oneOf (stringFactory).createFromFile("input.txt"); will(returnValue(string));
 			oneOf (string).transform();
-			oneOf (string).saveTo("output.txt");
+			oneOf (string).saveAs("output.txt");
 			oneOf (string).getString(); will(returnValue("nop"));
 			oneOf (console).write("nop");
 		}});

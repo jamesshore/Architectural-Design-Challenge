@@ -9,10 +9,15 @@ import java.io.IOException;
 
 public class FileSystemImpl implements FileSystem {
 
+	private Configuration _configuration;
+	
+	public FileSystemImpl(Configuration configuration) {
+		_configuration = configuration;
+	}
+
 	@Override
 	public String readFile(String filename) throws IOException {
-		File file = new File(filename);
-		BufferedReader reader = new BufferedReader(new FileReader(file));
+		BufferedReader reader = new BufferedReader(new FileReader(fullPath(filename)));
 		try {
 			String result = "";
 			int character = 0;
@@ -28,10 +33,9 @@ public class FileSystemImpl implements FileSystem {
 	
 	@Override
 	public void writeFile(String filename, String contents) throws IOException {
-		File file = new File(filename);
 		BufferedWriter writer = null;
 		try {
-			writer = new BufferedWriter(new FileWriter(file));
+			writer = new BufferedWriter(new FileWriter(fullPath(filename)));
 			writer.write(contents);
 		}
 		finally {
@@ -41,12 +45,15 @@ public class FileSystemImpl implements FileSystem {
 
 	@Override
 	public void deleteFile(String filename) {
-		File file = new File(filename);
-		file.delete();		
+		fullPath(filename).delete();		
 	}
 	
 	@Override
 	public boolean fileExists(String filename) {
-		return new File(filename).exists();
+		return fullPath(filename).exists();
+	}
+
+	private File fullPath(String filename) {
+		return new File(_configuration.workingDirectory(), filename);
 	}
 }
