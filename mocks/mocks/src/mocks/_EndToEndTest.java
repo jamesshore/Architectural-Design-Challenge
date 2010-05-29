@@ -19,10 +19,12 @@ public class _EndToEndTest {
 	public void endToEnd() throws IOException {
 		String inputFile = "in.txt";
 		String outputFile = "out.txt";
+		
+		String inputText = "The dog barks at midnight.";
 		String expectedOutput = "Gur qbt onexf ng zvqavtug.";
 		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		try {
-			_fileSystem.writeFile(inputFile, "The dog barks at midnight.");
+			_fileSystem.writeFile(inputFile, inputText);
 			UI.main(new String[] { inputFile, outputFile }, new PrintStream(out));
 			assertEquals(expectedOutput, _fileSystem.readFile(outputFile));
 			assertEquals(expectedOutput, out.toString());
