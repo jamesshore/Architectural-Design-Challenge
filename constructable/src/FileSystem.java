@@ -11,7 +11,7 @@ public class FileSystem {
 		return file.exists();
 	}
 
-	public void createFile(String filename) throws IOException {
+	public void createFile(String filename, String contents) throws IOException {
 		File file = new File(filename);
 		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
 		try {
@@ -23,8 +23,13 @@ public class FileSystem {
 	}
 
 	public void deleteFile(String filename) {
+		File file = new File(filename);
+		file.delete();		
+	}
+
+	public String readFile(String filename) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 }
