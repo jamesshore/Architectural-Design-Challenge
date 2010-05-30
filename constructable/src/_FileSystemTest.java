@@ -11,4 +11,12 @@ public class _FileSystemTest {
 		FileSystem fileSystem = new FileSystem();
 		assertFalse(fileSystem.fileExists("foo"));
 	}
+	
+	@Test
+	public void createFile() {
+		FileSystem fileSystem = new FileSystem();
+		assertFalse(fileSystem.fileExists("foo.txt"));
+		fileSystem.createFile("foo.txt");
+		assertTrue(fileSystem.fileExists("foo.txt"));
+	}
 }
