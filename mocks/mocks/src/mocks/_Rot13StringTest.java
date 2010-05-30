@@ -43,7 +43,7 @@ public class _Rot13StringTest {
 	}
 
 	@Test
-	public void equalsAndHashCode() {
+	public void equals_and_hashCode() {
 		Rot13String string1a = new Rot13StringImpl("abc", _fileSystem);
 		Rot13String string1b = new Rot13StringImpl("abc", _fileSystem);
 		Rot13String string2 = new Rot13StringImpl("def", _fileSystem);
