@@ -7,6 +7,16 @@ public class Rot13String {
 		_string = string;
 	}
 
+	public void transform() {
+		String result = "";
+		for (char c : _string.toCharArray()) {
+			if ((c >= 'a' && c <= 'm') || (c >= 'A' && c <= 'M')) result += (char)(c + 13);
+			else if ((c >= 'n' && c <= 'z') || (c >= 'N' && c <= 'Z')) result += (char)(c - 13);
+			else result += c;
+		}
+		_string = result;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -32,4 +42,8 @@ public class Rot13String {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Rot13String [_string=" + _string + "]";
+	}
 }

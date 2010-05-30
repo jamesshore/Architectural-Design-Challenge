@@ -8,7 +8,18 @@ public class _Rot13StringTest {
 
 	@Test
 	public void transform() {
-		fail("to do");
+		checkTransform("ab", "no");
+		checkTransform("no", "ab");
+		checkTransform("AB", "NO");
+		checkTransform("NO", "AB");
+		checkTransform(" '&].", " '&].");
+	}
+
+	private void checkTransform(String a, String b) {
+		Rot13String original = new Rot13String(a);
+		Rot13String expected = new Rot13String(b);
+		original.transform();
+		assertEquals(expected, original);
 	}
 	
 	@Test
