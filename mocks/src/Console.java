@@ -1,4 +1,4 @@
-package mocks;
+
 
 public interface Console {
 
