@@ -35,6 +35,13 @@ public class _FileSystemTest {
 	}
 	
 	@Test
+	public void createFile_overwritesExistingFile() throws IOException {
+		_fileSystem.createFile(_filename, "foo");
+		_fileSystem.createFile(_filename, "bar");
+		assertEquals("bar", _fileSystem.readFile(_filename));
+	}
+	
+	@Test
 	public void deleteFile() throws IOException {
 		_fileSystem.createFile(_filename, "foo");
 		assertTrue("assume file exists", _fileSystem.fileExists(_filename));

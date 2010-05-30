@@ -15,8 +15,7 @@ public class FileSystem {
 	}
 
 	public void createFile(String filename, String contents) throws IOException {
-		File file = new File(filename);
-		BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+		BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
 		try {
 			writer.write(contents);
 		}
