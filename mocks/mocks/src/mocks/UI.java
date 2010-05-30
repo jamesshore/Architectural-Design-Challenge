@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 public class UI {
+	protected static final String USAGE = "Usage: blah-blah <input> <output>";
+
 	private Console _console;
 	private Rot13StringFactory _stringFactory;
 	
@@ -19,6 +21,10 @@ public class UI {
 	public void go(String[] args) {
 		try {
 			CommandLine commandLine = new CommandLine(args);
+			if (!commandLine.valid()) {
+				_console.write(USAGE);
+				return;
+			}
 			
 			Rot13String string = _stringFactory.createFromFile(commandLine.inputFilename());
 			string.transform();
@@ -36,10 +42,5 @@ public class UI {
 
 	public static void main(String[] args, PrintStream out, Configuration configuration) {
 		new UI(out, configuration).go(args);
-	}
-
-	private static void printUsageAndExit(PrintStream out) {
-		new ConsoleImpl(out).write("Usage info goes here");
-		System.exit(1);		
 	}
 }

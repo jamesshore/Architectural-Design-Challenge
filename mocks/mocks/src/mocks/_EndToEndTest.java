@@ -1,14 +1,10 @@
 package mocks;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -35,11 +31,5 @@ public class _EndToEndTest {
 		UI.main(new String[] { inputFile, outputFile }, new PrintStream(consoleOutput), _configuration);
 		assertEquals(expectedOutput, _fileSystem.readFile(outputFile));
 		assertEquals(expectedOutput, consoleOutput.toString());
-	}
-	
-	@Test
-	@Ignore
-	public void toDo() {
-		fail("Need to implement test vs. production config switch.");
 	}
 }
