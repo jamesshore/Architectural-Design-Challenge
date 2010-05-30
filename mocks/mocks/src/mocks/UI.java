@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 
 public class UI {
-	private static String _inputFileName;
-	private static String _outputFileName;
 	private Console _console;
 	private Rot13StringFactory _stringFactory;
 	
@@ -18,12 +16,14 @@ public class UI {
 		_stringFactory = stringFactory;
 	}
 
-	public void go(String inputFilename, String outputFilename) {
+	public void go(String[] args) {
 		try {
-			Rot13String string = _stringFactory.createFromFile(inputFilename);
+			CommandLine commandLine = new CommandLine(args);
+			
+			Rot13String string = _stringFactory.createFromFile(commandLine.inputFilename());
 			string.transform();
-			string.saveAs(outputFilename);
 			_console.write(string.getString());
+			string.saveAs(commandLine.outputFilename());
 		}
 		catch (IOException e) {
 			_console.write(e.getLocalizedMessage());
@@ -35,15 +35,7 @@ public class UI {
 	}
 
 	public static void main(String[] args, PrintStream out, Configuration configuration) {
-		processArgs(args, out);
-		new UI(out, configuration).go(_inputFileName, _outputFileName);
-	}
-
-	private static void processArgs(String[] args, PrintStream out) {
-		if (args.length != 2) printUsageAndExit(out);		
-		_inputFileName = args[0];
-		_outputFileName = args[1];
-		if (_inputFileName == null || _outputFileName == null) printUsageAndExit(out);                        
+		new UI(out, configuration).go(args);
 	}
 
 	private static void printUsageAndExit(PrintStream out) {
