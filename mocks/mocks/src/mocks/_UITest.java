@@ -1,5 +1,6 @@
 package mocks;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.jmock.Expectations;
@@ -13,6 +14,8 @@ import org.junit.runner.RunWith;
 @RunWith(JMock.class)
 public class _UITest {
 	private Mockery _mockery = new JUnit4Mockery();
+	private String _inputFile = "input.txt";
+	private String _outputFile = "output.txt";
 	private Rot13StringFactory _stringFactory;
 	private Console _console;
 	private UI _ui;
@@ -26,19 +29,16 @@ public class _UITest {
 	
 	@Test
 	public void go_happyPath() throws IOException {
-		final String inputFile = "input.txt";
-		final String outputFile = "output.txt";
-
 		final Rot13String string = _mockery.mock(Rot13String.class);
 		_mockery.checking(new Expectations() {{
-			oneOf (_stringFactory).createFromFile(inputFile); will(returnValue(string));
+			oneOf (_stringFactory).createFromFile(_inputFile); will(returnValue(string));
 			oneOf (string).transform();
-			oneOf (string).saveAs(outputFile);
+			oneOf (string).saveAs(_outputFile);
 			oneOf (string).getString(); will(returnValue("nop"));
 			oneOf (_console).write("nop");
 		}});
 		
-		_ui.go(new String[] {inputFile, outputFile});
+		_ui.go(new String[] {_inputFile, _outputFile});
 	}
 	
 	@Test
@@ -48,6 +48,16 @@ public class _UITest {
 		}});
 		
 		_ui.go(new String[] {});
+	}
+	
+	@Test
+	public void go_handlesIOExceptionNicely() throws IOException {
+		_mockery.checking(new Expectations() {{
+			oneOf (_stringFactory).createFromFile(_inputFile); will(throwException(new FileNotFoundException("file not found")));
+			oneOf (_console).write("file not found");
+		}});
+		
+		_ui.go(new String[] {_inputFile, _outputFile});
 	}
 	
 }
