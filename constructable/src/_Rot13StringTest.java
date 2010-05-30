@@ -1,5 +1,7 @@
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
 import org.junit.Test;
 
 
@@ -7,7 +9,7 @@ import org.junit.Test;
 public class _Rot13StringTest {
 
 	@Test
-	public void laod() {
+	public void load() throws IOException {
 		FileSystem fileSystem = new FileSystem();
 		String filename = "in.txt";
 		try {
@@ -26,6 +28,20 @@ public class _Rot13StringTest {
 		checkTransform("AB", "NO");
 		checkTransform("NO", "AB");
 		checkTransform(" '&].", " '&].");
+	}
+	
+	@Test
+	public void saveAs() throws IOException {
+		FileSystem fileSystem = new FileSystem();
+		String filename = "out.txt";
+		try {
+			Rot13String string = new Rot13String("abc");
+			string.saveAs(filename);
+			assertEquals("abc", fileSystem.readFile(filename));
+		}
+		finally {
+			fileSystem.deleteFile(filename);
+		}
 	}
 
 	private void checkTransform(String a, String b) {

@@ -1,11 +1,13 @@
+import java.io.IOException;
+
 
 public class Rot13String {
 
 	private String _string; 
 
-	public static Rot13String load(String filename) {
-		// TODO Auto-generated method stub
-		return null;
+	public static Rot13String load(String filename) throws IOException {
+		FileSystem fileSystem = new FileSystem();
+		return new Rot13String(fileSystem.readFile(filename));
 	}
 	
 	public Rot13String(String string) {
@@ -20,6 +22,11 @@ public class Rot13String {
 			else result += c;
 		}
 		_string = result;
+	}
+
+	public void saveAs(String filename) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
