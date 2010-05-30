@@ -24,9 +24,9 @@ public class Rot13String {
 		_string = result;
 	}
 
-	public void saveAs(String filename) {
-		// TODO Auto-generated method stub
-		
+	public void saveAs(String filename) throws IOException {
+		FileSystem fileSystem = new FileSystem();
+		fileSystem.createFile(filename, _string);
 	}
 
 	@Override

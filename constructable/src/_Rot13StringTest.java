@@ -2,6 +2,7 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 
@@ -43,7 +44,13 @@ public class _Rot13StringTest {
 			fileSystem.deleteFile(filename);
 		}
 	}
-
+	
+	@Test
+	public void todo() {
+		fail("next: transaction object");
+		fail("be sure to remove throws declaration on saveAs()");
+	}
+	
 	private void checkTransform(String a, String b) {
 		Rot13String original = new Rot13String(a);
 		Rot13String expected = new Rot13String(b);
