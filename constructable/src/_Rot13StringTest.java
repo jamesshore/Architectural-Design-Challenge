@@ -7,6 +7,19 @@ import org.junit.Test;
 public class _Rot13StringTest {
 
 	@Test
+	public void laod() {
+		FileSystem fileSystem = new FileSystem();
+		String filename = "in.txt";
+		try {
+			fileSystem.createFile(filename, "abc");
+			assertEquals(new Rot13String("abc"), Rot13String.load(filename));
+		}
+		finally {
+			fileSystem.deleteFile(filename);
+		}
+	}
+	
+	@Test
 	public void transform() {
 		checkTransform("ab", "no");
 		checkTransform("no", "ab");

@@ -50,7 +50,7 @@ public class _FileSystemTest {
 	}
 	
 	@Test
-	public void deleteFile_shouldDoNothingIfFileDoesNotExist() {
+	public void deleteFile_failsSilentlyIfFileDoesNotExist() {
 		_fileSystem.deleteFile(_filename);
 		_fileSystem.deleteFile(_filename);
 	}

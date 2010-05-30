@@ -2,6 +2,11 @@
 public class Rot13String {
 
 	private String _string; 
+
+	public static Rot13String load(String filename) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	public Rot13String(String string) {
 		_string = string;
