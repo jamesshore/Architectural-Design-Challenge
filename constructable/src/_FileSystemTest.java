@@ -7,7 +7,8 @@ import org.junit.Test;
 public class _FileSystemTest {
 
 	@Test
-	public void todo() {
-		fail();
+	public void fileExists() {
+		FileSystem fileSystem = new FileSystem();
+		assertFalse(fileSystem.fileExists("foo"));
 	}
 }
