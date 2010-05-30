@@ -5,11 +5,11 @@ import java.io.IOException;
 public class Rot13String implements TransformableString {
 
 	private String _string;
-	private PersistenceMechanism _fileSystem;
+	private PersistenceMechanism _persistence;
 
-	public Rot13String(String string, PersistenceMechanism fileSystem) {
+	public Rot13String(String string, PersistenceMechanism persistence) {
 		_string = string;
-		_fileSystem = fileSystem;
+		_persistence = persistence;
 	}
 
 	public void transform() {
@@ -21,7 +21,7 @@ public class Rot13String implements TransformableString {
 	}
 
 	public void saveAs(String filename) throws IOException {
-		_fileSystem.overwrite(filename, _string);		
+		_persistence.overwrite(filename, _string);		
 	}
 
 	public void writeTo(Display display) {
