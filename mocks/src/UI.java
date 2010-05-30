@@ -6,15 +6,15 @@ import java.io.PrintStream;
 public class UI {
 	protected static final String USAGE = "Usage: blah-blah <input> <output>";
 
-	private Console _console;
-	private Rot13StringFactory _stringFactory;
+	private Display _display;
+	private Rot13StringLoader _stringFactory;
 	
 	public UI(PrintStream out, Configuration configuration) {
-		this(new ConsoleImpl(out), new Rot13StringFactoryImpl(new FileSystemImpl(configuration)));
+		this(new ConsoleDisplay(out), new Rot13StringFileSystemLoader(new FileSystem(configuration)));
 	}
 	
-	public UI(Console console, Rot13StringFactory stringFactory) {
-		_console = console;
+	public UI(Display display, Rot13StringLoader stringFactory) {
+		_display = display;
 		_stringFactory = stringFactory;
 	}
 
@@ -22,17 +22,17 @@ public class UI {
 		try {
 			CommandLine commandLine = new CommandLine(args);
 			if (!commandLine.valid()) {
-				_console.write(USAGE);
+				_display.write(USAGE);
 				return;
 			}
 			
-			Rot13String string = _stringFactory.createFromFile(commandLine.inputFilename());
+			TransformableString string = _stringFactory.load(commandLine.inputFilename());
 			string.transform();
-			_console.write(string.getString());
+			string.writeTo(_display);
 			string.saveAs(commandLine.outputFilename());
 		}
 		catch (IOException e) {
-			_console.write(e.getLocalizedMessage());
+			_display.write(e.getLocalizedMessage());
 		}
 	}
 		

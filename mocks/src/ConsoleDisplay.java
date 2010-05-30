@@ -2,11 +2,11 @@
 
 import java.io.PrintStream;
 
-public class ConsoleImpl implements Console {
+public class ConsoleDisplay implements Display {
 
 	private PrintStream _out;
 		
-	public ConsoleImpl(PrintStream out) {
+	public ConsoleDisplay(PrintStream out) {
 		_out = out;
 	}
 

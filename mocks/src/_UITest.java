@@ -16,26 +16,25 @@ public class _UITest {
 	private Mockery _mockery = new JUnit4Mockery();
 	private String _inputFile = "input.txt";
 	private String _outputFile = "output.txt";
-	private Rot13StringFactory _stringFactory;
-	private Console _console;
+	private Rot13StringLoader _stringFactory;
+	private Display _display;
 	private UI _ui;
 
 	@Before
 	public void setup() {
-		_console = _mockery.mock(Console.class);
-		_stringFactory = _mockery.mock(Rot13StringFactory.class);		
-		_ui = new UI(_console, _stringFactory);
+		_display = _mockery.mock(Display.class);
+		_stringFactory = _mockery.mock(Rot13StringLoader.class);		
+		_ui = new UI(_display, _stringFactory);
 	}
 	
 	@Test
 	public void go_happyPath() throws IOException {
-		final Rot13String string = _mockery.mock(Rot13String.class);
+		final TransformableString string = _mockery.mock(TransformableString.class);
 		_mockery.checking(new Expectations() {{
-			oneOf (_stringFactory).createFromFile(_inputFile); will(returnValue(string));
+			oneOf (_stringFactory).load(_inputFile); will(returnValue(string));
 			oneOf (string).transform();
 			oneOf (string).saveAs(_outputFile);
-			oneOf (string).getString(); will(returnValue("nop"));
-			oneOf (_console).write("nop");
+			oneOf (string).writeTo(_display);
 		}});
 		
 		_ui.go(new String[] {_inputFile, _outputFile});
@@ -44,7 +43,7 @@ public class _UITest {
 	@Test
 	public void go_printsUsageWhenCommandLineIsBad() throws IOException {
 		_mockery.checking(new Expectations() {{
-			oneOf (_console).write(UI.USAGE);
+			oneOf (_display).write(UI.USAGE);
 		}});
 		
 		_ui.go(new String[] {});
@@ -53,8 +52,8 @@ public class _UITest {
 	@Test
 	public void go_handlesIOExceptionNicely() throws IOException {
 		_mockery.checking(new Expectations() {{
-			oneOf (_stringFactory).createFromFile(_inputFile); will(throwException(new FileNotFoundException("file not found")));
-			oneOf (_console).write("file not found");
+			oneOf (_stringFactory).load(_inputFile); will(throwException(new FileNotFoundException("file not found")));
+			oneOf (_display).write("file not found");
 		}});
 		
 		_ui.go(new String[] {_inputFile, _outputFile});

@@ -15,11 +15,11 @@ import org.junit.runner.RunWith;
 @RunWith(JMock.class)
 public class _Rot13StringTest {
 	private Mockery _mockery = new JUnit4Mockery();
-	private FileSystem _fileSystem;
+	private PersistenceMechanism _fileSystem;
 		
 	@Before
 	public void setup() {
-		_fileSystem = _mockery.mock(FileSystem.class);
+		_fileSystem = _mockery.mock(PersistenceMechanism.class);
 	}
 	
 	@Test
@@ -33,10 +33,10 @@ public class _Rot13StringTest {
 	
 	@Test
 	public void saveAs() throws IOException {
-		Rot13String string = new Rot13StringImpl("abc", _fileSystem);
+		TransformableString string = new Rot13String("abc", _fileSystem);
 
 		_mockery.checking(new Expectations() {{
-			oneOf (_fileSystem).writeFile("filename", "abc");
+			oneOf (_fileSystem).overwrite("filename", "abc");
 		}});
 
 		string.saveAs("filename");
@@ -44,9 +44,9 @@ public class _Rot13StringTest {
 
 	@Test
 	public void equals_and_hashCode() {
-		Rot13String string1a = new Rot13StringImpl("abc", _fileSystem);
-		Rot13String string1b = new Rot13StringImpl("abc", _fileSystem);
-		Rot13String string2 = new Rot13StringImpl("def", _fileSystem);
+		TransformableString string1a = new Rot13String("abc", _fileSystem);
+		TransformableString string1b = new Rot13String("abc", _fileSystem);
+		TransformableString string2 = new Rot13String("def", _fileSystem);
 
 		assertEquals(string1a, string1b);
 		assertFalse(string1a.equals(string2));
@@ -54,13 +54,19 @@ public class _Rot13StringTest {
 	}
 	
 	@Test
-	public void getString() {
-		assertEquals("abc", new Rot13StringImpl("abc", _fileSystem).getString());
+	public void writeTo() {
+		TransformableString string = new Rot13String("foo", _fileSystem);
+
+		final Display display = _mockery.mock(Display.class);
+		_mockery.checking(new Expectations() {{
+			oneOf (display).write("foo");
+		}});
+		string.writeTo(display);
 	}
 
 	private void checkTransform(String expected, String original) {
-		Rot13String string = new Rot13StringImpl(original, _fileSystem);
+		TransformableString string = new Rot13String(original, _fileSystem);
 		string.transform();
-		assertEquals(new Rot13StringImpl(expected, _fileSystem), string);
+		assertEquals(new Rot13String(expected, _fileSystem), string);
 	}
 }
