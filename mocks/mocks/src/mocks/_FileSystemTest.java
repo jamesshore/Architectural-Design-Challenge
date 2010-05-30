@@ -46,7 +46,7 @@ public class _FileSystemTest {
 	}
 	
 	@Test
-	public void readFile() throws IOException {
+	public void readFile_shouldHandleLineBreaksProperly() throws IOException {
 		_fileSystem.writeFile(_filename, "foo\nbar");
 		assertEquals("foo\nbar", _fileSystem.readFile(_filename));
 	}
