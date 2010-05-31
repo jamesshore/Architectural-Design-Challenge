@@ -1,6 +1,6 @@
-import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
@@ -17,7 +17,9 @@ public class _Rot13StringTest {
 		FileSystem fileSystem = new FileSystem();
 		String filename = "in.txt";
 		try {
-			fileSystem.createFile(filename, "abc");
+			Transaction transaction = new Transaction();
+			fileSystem.createFile(transaction, filename, "abc");
+			transaction.commit();
 			assertEquals(new Rot13String("abc"), Rot13String.load(filename));
 		}
 		finally {
@@ -38,14 +40,12 @@ public class _Rot13StringTest {
 	public void saveAs() throws IOException {
 		Transaction transaction = new Transaction();
 		Rot13String string = new Rot13String("abc");
-		string.saveAs("out.txt");
+		string.saveAs(transaction, "out.txt");
 		assertTrue("should queue up save operation", transaction.willSave());
 	}
 	
 	@Test
-	@Ignore
 	public void todo() {
-		fail("next: transaction object");
 		fail("be sure to remove throws declaration on saveAs()");
 	}
 	

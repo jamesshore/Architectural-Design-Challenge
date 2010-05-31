@@ -13,7 +13,13 @@ public class FileSystem {
 		return file.exists();
 	}
 
-	public void createFile(String filename, String contents) throws IOException {
+	public void createFile(Transaction transaction, final String filename, final String contents) {
+		transaction.add(new TransactionElement() { public void commit() throws IOException {
+			createFile(filename, contents);
+		}});
+	}
+
+	private void createFile(String filename, String contents) throws IOException {
 		BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
 		try {
 			writer.write(contents);

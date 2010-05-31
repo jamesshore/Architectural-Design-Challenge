@@ -24,9 +24,8 @@ public class Rot13String {
 		_string = result;
 	}
 
-	public void saveAs(String filename) throws IOException {
-		FileSystem fileSystem = new FileSystem();
-		fileSystem.createFile(filename, _string);
+	public void saveAs(Transaction transaction, final String filename) {
+		new FileSystem().createFile(transaction, filename, _string);
 	}
 
 	@Override

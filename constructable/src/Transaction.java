@@ -1,9 +1,11 @@
+import java.io.IOException;
+
 
 public class Transaction {
 
 	private TransactionElement _element = null;
 	
-	public void commit() {
+	public void commit() throws IOException {
 		assert (_element != null);
 		_element.commit();
 	}

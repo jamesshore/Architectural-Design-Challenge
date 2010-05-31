@@ -1,5 +1,7 @@
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
 import org.junit.Test;
 
 
@@ -7,7 +9,7 @@ import org.junit.Test;
 public class _TransactionTest {
 
 	@Test
-	public void commit() {
+	public void commit() throws IOException {
 		final int[] arrayHack = {0};   // sure wish Java had closures...
 		Transaction transaction = new Transaction();
 		transaction.add(new TransactionElement() { public void commit() {   // ...and decent anonymous function syntax.

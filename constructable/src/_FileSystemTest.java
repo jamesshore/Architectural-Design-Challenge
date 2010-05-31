@@ -30,20 +30,20 @@ public class _FileSystemTest {
 	@Test
 	public void createFile() throws IOException {
 		assertFalse("assume file doesn't exist", _fileSystem.fileExists(_filename));
-		_fileSystem.createFile(_filename, "foo");
+		createFile("foo");
 		assertTrue("file should be created", _fileSystem.fileExists(_filename));
 	}
 	
 	@Test
 	public void createFile_overwritesExistingFile() throws IOException {
-		_fileSystem.createFile(_filename, "foo");
-		_fileSystem.createFile(_filename, "bar");
+		createFile("foo");
+		createFile("bar");
 		assertEquals("bar", _fileSystem.readFile(_filename));
 	}
 	
 	@Test
 	public void deleteFile() throws IOException {
-		_fileSystem.createFile(_filename, "foo");
+		createFile("foo");
 		assertTrue("assume file exists", _fileSystem.fileExists(_filename));
 		_fileSystem.deleteFile(_filename);
 		assertFalse("file should be deleted", _fileSystem.fileExists(_filename));
@@ -57,7 +57,13 @@ public class _FileSystemTest {
 	
 	@Test
 	public void readFile() throws IOException {
-		_fileSystem.createFile(_filename, "contents");
+		createFile("contents");
 		assertEquals("contents", _fileSystem.readFile(_filename));
+	}
+
+	private void createFile(String contents) throws IOException {
+		Transaction transaction = new Transaction();
+		_fileSystem.createFile(transaction, _filename, contents);
+		transaction.commit();
 	}
 }
