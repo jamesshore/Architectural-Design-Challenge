@@ -8,15 +8,15 @@ public class _TransactionTest {
 
 	@Test
 	public void commit() {
-		final int[] array = {0};
+		final int[] arrayHack = {0};   // sure wish Java had closures...
 		Transaction transaction = new Transaction();
-		transaction.add(new TransactionElement() { public void commit() {
-			array[0] = 1;
+		transaction.add(new TransactionElement() { public void commit() {   // ...and decent anonymous function syntax.
+			arrayHack[0] = 1;
 		}});
 		
-		assertEquals("should not execute transaction element immediately", 0, array[0]);
+		assertEquals("should not execute transaction element immediately", 0, arrayHack[0]);
 		transaction.commit();
-		assertEquals("should execute transaction element on commit", 1, array[0]);		
+		assertEquals("should execute transaction element on commit", 1, arrayHack[0]);		
 	}
 	
 	@Test

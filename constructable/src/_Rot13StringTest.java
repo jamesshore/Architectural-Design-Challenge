@@ -1,3 +1,4 @@
+import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
@@ -35,16 +36,10 @@ public class _Rot13StringTest {
 	
 	@Test
 	public void saveAs() throws IOException {
-		FileSystem fileSystem = new FileSystem();
-		String filename = "out.txt";
-		try {
-			Rot13String string = new Rot13String("abc");
-			string.saveAs(filename);
-			assertEquals("abc", fileSystem.readFile(filename));
-		}
-		finally {
-			fileSystem.deleteFile(filename);
-		}
+		Transaction transaction = new Transaction();
+		Rot13String string = new Rot13String("abc");
+		string.saveAs("out.txt");
+		assertTrue("should queue up save operation", transaction.willSave());
 	}
 	
 	@Test

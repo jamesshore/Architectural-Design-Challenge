@@ -13,8 +13,7 @@ public class Transaction {
 	}
 
 	public boolean willSave() {
-		// TODO Auto-generated method stub
-		return false;
+		return _element != null;
 	}
 
 }
