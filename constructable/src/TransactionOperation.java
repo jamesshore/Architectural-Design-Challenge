@@ -1,6 +1,6 @@
 import java.io.IOException;
 
 
-public interface TransactionElement {
+public interface TransactionOperation {
 	public void commit() throws IOException;
 }

@@ -37,7 +37,7 @@ public class FileSystem {
 		}	
 	}
 
-	public static class CreateOperation implements TransactionElement {
+	public static class CreateOperation implements TransactionOperation {
 		private final String _contents;
 		private final String _filename;
 
