@@ -32,7 +32,7 @@ public class _Rot13StringTest {
 		Transaction transaction = new Transaction();
 		Rot13String string = new Rot13String("abc");
 		string.saveAs(transaction, "out.txt");
-		assertTrue("should queue up save operation", transaction.willSave());
+		assertTrue("should queue up save operation", transaction.hasOperation(new FileSystem.CreateOperation("out.txt", "abc")));
 	}
 
 	@Test

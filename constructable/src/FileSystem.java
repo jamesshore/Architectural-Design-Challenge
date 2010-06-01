@@ -38,12 +38,12 @@ public class FileSystem {
 	}
 
 	public static class CreateOperation implements TransactionOperation {
-		private final String _contents;
 		private final String _filename;
+		private final String _contents;
 
 		CreateOperation(String filename, String contents) {
-			_contents = contents;
 			_filename = filename;
+			_contents = contents;
 		}
 
 		public void commit() throws IOException {
@@ -54,6 +54,39 @@ public class FileSystem {
 			finally {
 				writer.close();
 			}
+		}
+		
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result
+					+ ((_contents == null) ? 0 : _contents.hashCode());
+			result = prime * result
+					+ ((_filename == null) ? 0 : _filename.hashCode());
+			return result;
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			CreateOperation other = (CreateOperation) obj;
+			if (_contents == null) {
+				if (other._contents != null)
+					return false;
+			} else if (!_contents.equals(other._contents))
+				return false;
+			if (_filename == null) {
+				if (other._filename != null)
+					return false;
+			} else if (!_filename.equals(other._filename))
+				return false;
+			return true;
 		}
 	}
 

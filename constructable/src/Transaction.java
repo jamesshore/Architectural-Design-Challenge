@@ -14,11 +14,6 @@ public class Transaction {
 		_element = element;		
 	}
 
-	// TODO: delete me
-	public boolean willSave() {
-		return _element != null;
-	}
-
 	public boolean hasOperation(TransactionOperation operation) {
 		if (_element == null) return false; 
 		return _element.equals(operation);
