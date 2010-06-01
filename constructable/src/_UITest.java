@@ -11,7 +11,7 @@ public class _UITest {
 		UI ui = new UI();
 		Transaction transaction = new Transaction();
 		Rot13String string = new Rot13String("abc");
-		ui.go(transaction, string);
+		ui.go(transaction, string, "out.txt");
 		
 		assertEquals(new Rot13String("nop"), string);
 		assertTrue("UI should save transformed file", transaction.hasOperation(new FileSystem.CreateOperation("out.txt", "nop")));
