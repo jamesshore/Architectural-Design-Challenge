@@ -55,6 +55,6 @@ public class Rot13String {
 
 	@Override
 	public String toString() {
-		return "Rot13String [_string=" + _string + "]";
+		return _string;
 	}
 }

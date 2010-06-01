@@ -1,14 +1,16 @@
-import java.io.ByteArrayOutputStream;
+import java.io.*;
 
 
 public class UI {
-
-	public UI(ByteArrayOutputStream output) {
-		// TODO Auto-generated constructor stub
+	private Console _console;
+	
+	public UI(PrintStream output) {
+		_console = new Console(output);
 	}
 
 	public void go(Transaction transaction, Rot13String string, String outputFilename) {
 		string.transform();
+		_console.write(string.toString());
 		string.saveAs(transaction, outputFilename);
 	}
 

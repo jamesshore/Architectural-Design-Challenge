@@ -36,6 +36,11 @@ public class _Rot13StringTest {
 	}
 
 	@Test
+	public void toString_() {
+		assertEquals("yoyo", new Rot13String("yoyo").toString());
+	}
+	
+	@Test
 	public void equals() {
 		Rot13String string1a = new Rot13String("foo");
 		Rot13String string1b = new Rot13String("foo");
