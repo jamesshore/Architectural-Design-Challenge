@@ -22,16 +22,9 @@ public class _TransactionTest {
 	}
 	
 	@Test
-	public void willSave_deleteMe() {
-		Transaction transaction = new Transaction();
-		assertFalse("new transaction should think it does nothing", transaction.willSave());
-		transaction.add(new TransactionOperation() { public void commit() {} });
-		assertTrue("for now, assume any transaction element will cause a save to occur", transaction.willSave());
-	}
-	
-	@Test
 	public void hasOperation() {
 		Transaction transaction = new Transaction();
+		assertFalse("should fail properly when no operations pending", transaction.hasOperation(new TestOperation()));
 		transaction.add(new TestOperation());
 		assertTrue("should check operations", transaction.hasOperation(new TestOperation()));
 	}

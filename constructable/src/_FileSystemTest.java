@@ -60,7 +60,6 @@ public class _FileSystemTest {
 	}
 	
 	@Test
-	@Ignore
 	public void createOperation_isTestable() {
 		Transaction transaction = new Transaction();
 		_fileSystem.createFile(transaction, "filename", "contents");
