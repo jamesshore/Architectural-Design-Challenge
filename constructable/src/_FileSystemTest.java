@@ -60,6 +60,13 @@ public class _FileSystemTest {
 		createFile("contents");
 		assertEquals("contents", _fileSystem.readFile(_filename));
 	}
+	
+	@Test
+	public void createOperation_isTestable() {
+		Transaction transaction = new Transaction();
+		_fileSystem.createFile(transaction, "filename", "contents");
+		assertTrue("create operation should be testable", transaction.hasOperation(new FileSystem.CreateOperation("filename", "contents")));
+	}
 
 	private void createFile(String contents) throws IOException {
 		Transaction transaction = new Transaction();

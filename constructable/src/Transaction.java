@@ -18,4 +18,8 @@ public class Transaction {
 		return _element != null;
 	}
 
+	public boolean hasOperation(TransactionElement createOperation) {
+		return false;
+	}
+
 }

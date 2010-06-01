@@ -14,19 +14,7 @@ public class FileSystem {
 	}
 
 	public void createFile(Transaction transaction, final String filename, final String contents) {
-		transaction.add(new TransactionElement() { public void commit() throws IOException {
-			createFile(filename, contents);
-		}});
-	}
-
-	private void createFile(String filename, String contents) throws IOException {
-		BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
-		try {
-			writer.write(contents);
-		}
-		finally {
-			writer.close();
-		}
+		transaction.add(new CreateOperation(filename, contents));
 	}
 
 	public void deleteFile(String filename) {
@@ -47,6 +35,26 @@ public class FileSystem {
 		finally {
 			reader.close();
 		}	
+	}
+
+	public static class CreateOperation implements TransactionElement {
+		private final String _contents;
+		private final String _filename;
+
+		CreateOperation(String filename, String contents) {
+			_contents = contents;
+			_filename = filename;
+		}
+
+		public void commit() throws IOException {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(_filename));
+			try {
+				writer.write(_contents);
+			}
+			finally {
+				writer.close();
+			}
+		}
 	}
 
 }

@@ -14,5 +14,6 @@ public class _UITest {
 		ui.go(transaction, string);
 		
 		assertEquals(new Rot13String("nop"), string);
+		assertTrue("UI should save transformed file", transaction.willSave());
 	}
 }
