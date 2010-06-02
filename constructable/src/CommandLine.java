@@ -8,7 +8,7 @@ public class CommandLine {
 	}
 
 	public boolean isValid() {
-		return true;
+		return _args.length == 2;
 	}
 	
 	public String inputFilename() {

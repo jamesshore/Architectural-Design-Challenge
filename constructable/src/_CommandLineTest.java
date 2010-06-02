@@ -8,7 +8,8 @@ public class _CommandLineTest {
 	@Test
 	public void happyPath() {
 		CommandLine commandLine = new CommandLine(new String[] { "in.txt", "out.txt" });
-		
+
+		assertTrue("puppies and butterflies", commandLine.isValid());
 		assertEquals("in.txt", commandLine.inputFilename());
 		assertEquals("out.txt", commandLine.outputFilename());
 	}

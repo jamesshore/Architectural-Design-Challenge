@@ -8,10 +8,10 @@ public class UI {
 		_console = new Console(output);
 	}
 
-	public void processFiles(Transaction transaction, Rot13String string, String outputFilename) {
-		string.transform();
-		_console.write(string.toString());
-		string.saveAs(transaction, outputFilename);
+	public void processFiles(Transaction transaction, String[] args) {
+//		string.transform();
+//		_console.write(string.toString());
+//		string.saveAs(transaction, outputFilename);
 	}
 
 }
