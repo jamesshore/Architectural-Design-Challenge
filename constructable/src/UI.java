@@ -2,6 +2,8 @@ import java.io.*;
 
 
 public class UI {
+	public static final String USAGE = "Blah, blah, usage, etc.";
+	
 	private FileSystem _fileSystem;
 	private Console _console;
 	
@@ -12,6 +14,10 @@ public class UI {
 
 	public void go(Transaction transaction, String[] args) throws IOException {
 		CommandLine commandLine = new CommandLine(args);
+		if (!commandLine.isValid()) {
+			_console.write(USAGE);
+			return;
+		}
 		
 		try {
 			Rot13String string = Rot13String.load(_fileSystem, commandLine.inputFilename());

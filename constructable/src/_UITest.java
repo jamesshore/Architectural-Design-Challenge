@@ -38,4 +38,12 @@ public class _UITest {
 		
 		assertEquals("console output", "error message!", _output.toString());
 	}
+	
+	@Test
+	public void go_shouldDisplayUsageForBadCommandLine() throws IOException {
+		UI ui = new UI(new FileSystem(), _print);
+		ui.go(new Transaction(), new String[] {});
+		
+		assertEquals("console output", UI.USAGE, _output.toString());
+	}
 }
