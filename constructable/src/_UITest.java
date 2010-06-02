@@ -19,7 +19,7 @@ public class _UITest {
 		Transaction transaction = new Transaction();
 		
 		String[] args = new String[] { "in.txt", "out.txt" };
-		_ui.processFiles(transaction, args);
+		_ui.go(transaction, args);
 		
 		assertEquals("console output", "nop", _output.toString());
 		assertTrue("should save transformed file", transaction.hasOperation(new FileSystem.CreateOperation("out.txt", "nop")));

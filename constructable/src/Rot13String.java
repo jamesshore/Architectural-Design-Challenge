@@ -9,10 +9,6 @@ public class Rot13String {
 		return new Rot13String(fileSystem.readFile(filename));
 	}
 	
-	public static Rot13String load(String filename) throws IOException {
-		return load(new FileSystem(), filename);
-	}
-	
 	public Rot13String(String string) {
 		_string = string;
 	}
