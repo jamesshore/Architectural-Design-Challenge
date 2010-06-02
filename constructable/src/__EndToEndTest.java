@@ -27,7 +27,7 @@ public class __EndToEndTest {
 	public void smokeTest() throws IOException {
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		
-		UI.main(new String[] { _inputFile, _outputFile });
+		UI.main(new PrintStream(output), new String[] { _inputFile, _outputFile });
 		assertEquals("Gur qbt onexf ng zvqavtug.", _fileSystem.readFile(_outputFile));
 	}
 }

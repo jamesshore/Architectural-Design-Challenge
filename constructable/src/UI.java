@@ -31,8 +31,12 @@ public class UI {
 	}
 
 	public static void main(String[] args) throws IOException {
+		main(System.out, args);
+	}
+	
+	public static void main(PrintStream out, String[] args) throws IOException {
 		Transaction transaction = new Transaction();
-		UI ui = new UI(new FileSystem(), System.out);
+		UI ui = new UI(new FileSystem(), out);
 		ui.go(transaction, args);
 		transaction.commit();
 	}

@@ -22,6 +22,11 @@ public class _TransactionTest {
 	}
 	
 	@Test
+	public void commit_shouldFailGracefullyWhenNoOperations() throws IOException {
+		new Transaction().commit(); // should not throw exception
+	}
+	
+	@Test
 	public void hasOperation() {
 		Transaction transaction = new Transaction();
 		assertFalse("should fail properly when no operations pending", transaction.hasOperation(new TestOperation()));

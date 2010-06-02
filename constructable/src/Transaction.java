@@ -6,7 +6,7 @@ public class Transaction {
 	private TransactionOperation _element = null;
 	
 	public void commit() throws IOException {
-		assert (_element != null);
+		if (_element == null) return;
 		_element.commit();
 	}
 
