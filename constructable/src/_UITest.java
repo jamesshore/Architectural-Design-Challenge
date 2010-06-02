@@ -4,30 +4,38 @@ import org.junit.*;
 
 public class _UITest {
 	private ByteArrayOutputStream _output;
-	private UI _ui;
+	private PrintStream _print;
 	
 	@Before
 	public void setup() {
 		_output = new ByteArrayOutputStream();
-		_ui = new UI(new PrintStream(_output));
+		_print = new PrintStream(_output);
 	}
 	
 	@Test
-	public void processFiles() throws IOException {
-		createTestFile("in.txt", "abc");
-
-		Transaction transaction = new Transaction();
+	public void go() throws IOException {
+		FileSystem fileSystemStub = new FileSystem() {
+			public String readFile(String filename) { return "abc"; }
+		};
 		
+		Transaction transaction = new Transaction();
 		String[] args = new String[] { "in.txt", "out.txt" };
-		_ui.go(transaction, args);
+		UI ui = new UI(fileSystemStub, _print);
+		ui.go(transaction, args);
 		
 		assertEquals("console output", "nop", _output.toString());
 		assertTrue("should save transformed file", transaction.hasOperation(new FileSystem.CreateOperation("out.txt", "nop")));
 	}
-
-	private void createTestFile(String filename, String contents) throws IOException {
-		Transaction transaction = new Transaction();
-		new FileSystem().createFile(transaction, filename, contents);
-		transaction.commit();
+	
+	@Test
+	public void go_shouldHandleExceptionGracefully() throws IOException {
+		FileSystem fileSystemStub = new FileSystem() {
+			public String readFile(String filename) throws IOException { throw new IOException("error message!"); }
+		};
+		
+		UI ui = new UI(fileSystemStub, _print);
+		ui.go(new Transaction() {}, new String[] { "in", "out" });
+		
+		assertEquals("console output", "error message!", _output.toString());
 	}
 }
