@@ -15,26 +15,12 @@ public class _Rot13StringTest {
 
 	@Test
 	public void load() throws IOException {
-		FileSystem fileSystem = new FileSystem();
-		String filename = "in.txt";
-		try {
-			Transaction transaction = new Transaction();
-			fileSystem.createFile(transaction, filename, "abc");
-			transaction.commit();
-			
-			
-			FileSystem stub = new FileSystem() {
-				public String readFile(String filename) { return "foo"; } 
-			};
-			Rot13String loaded = Rot13String.load(stub, filename);
-			
-			
-			assertEquals(new Rot13String("abc"), loaded);
-			
-			
-		} finally {
-			fileSystem.deleteFile(filename);
-		}
+		FileSystem stub = new FileSystem() {
+			public String readFile(String filename) { return "abc"; } 
+		};
+		Rot13String loaded = Rot13String.load(stub, "yadda");
+					
+		assertEquals(new Rot13String("abc"), loaded);
 	}
 
 	@Test
