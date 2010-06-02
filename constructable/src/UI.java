@@ -8,7 +8,7 @@ public class UI {
 		_console = new Console(output);
 	}
 
-	public void go(Transaction transaction, Rot13String string, String outputFilename) {
+	public void processFiles(Transaction transaction, Rot13String string, String outputFilename) {
 		string.transform();
 		_console.write(string.toString());
 		string.saveAs(transaction, outputFilename);

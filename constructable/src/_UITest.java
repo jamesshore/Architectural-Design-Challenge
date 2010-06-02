@@ -1,20 +1,26 @@
 import static org.junit.Assert.*;
 import java.io.*;
-import org.junit.Test;
+import org.junit.*;
 
 public class _UITest {
-
+	private ByteArrayOutputStream _output;
+	private UI _ui;
+	
+	@Before
+	public void setup() {
+		_output = new ByteArrayOutputStream();
+		_ui = new UI(new PrintStream(_output));
+	}
+	
 	@Test
-	public void transformsAndSavesFile() throws IOException {
-		ByteArrayOutputStream output = new ByteArrayOutputStream();
+	public void processFiles() throws IOException {
 		Transaction transaction = new Transaction();
-
-		Rot13String string = new Rot13String("abc");
-		UI ui = new UI(new PrintStream(output));
-		ui.go(transaction, string, "out.txt");
+		Rot13String inputString = new Rot13String("abc");
 		
-		assertEquals(new Rot13String("nop"), string);
+		_ui.processFiles(transaction, inputString, "out.txt");
+		
+		assertEquals(new Rot13String("nop"), inputString);
 		assertTrue("UI should save transformed file", transaction.hasOperation(new FileSystem.CreateOperation("out.txt", "nop")));
-		assertEquals("console output", "nop", output.toString());
+		assertEquals("console output", "nop", _output.toString());
 	}
 }
