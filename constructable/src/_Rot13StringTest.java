@@ -5,6 +5,15 @@ import org.junit.Test;
 public class _Rot13StringTest {
 
 	@Test
+	public void transform() {
+		checkTransform("ab", "no");
+		checkTransform("no", "ab");
+		checkTransform("AB", "NO");
+		checkTransform("NO", "AB");
+		checkTransform(" '&].", " '&].");
+	}
+
+	@Test
 	public void load() throws IOException {
 		FileSystem fileSystem = new FileSystem();
 		String filename = "in.txt";
@@ -12,19 +21,20 @@ public class _Rot13StringTest {
 			Transaction transaction = new Transaction();
 			fileSystem.createFile(transaction, filename, "abc");
 			transaction.commit();
-			assertEquals(new Rot13String("abc"), Rot13String.load(filename));
+			
+			
+			FileSystem stub = new FileSystem() {
+				public String readFile(String filename) { return "foo"; } 
+			};
+			Rot13String loaded = Rot13String.load(stub, filename);
+			
+			
+			assertEquals(new Rot13String("abc"), loaded);
+			
+			
 		} finally {
 			fileSystem.deleteFile(filename);
 		}
-	}
-
-	@Test
-	public void transform() {
-		checkTransform("ab", "no");
-		checkTransform("no", "ab");
-		checkTransform("AB", "NO");
-		checkTransform("NO", "AB");
-		checkTransform(" '&].", " '&].");
 	}
 
 	@Test
