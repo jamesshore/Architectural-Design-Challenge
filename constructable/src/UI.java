@@ -30,4 +30,11 @@ public class UI {
 		}
 	}
 
+	public static void main(String[] args) throws IOException {
+		Transaction transaction = new Transaction();
+		UI ui = new UI(new FileSystem(), System.out);
+		ui.go(transaction, args);
+		transaction.commit();
+	}
+
 }
