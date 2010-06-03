@@ -46,4 +46,9 @@ public class _UITest {
 		
 		assertEquals("console output", UI.USAGE, _output.toString());
 	}
+	
+	@Test
+	public void todo() {
+		fail("needs configuration");
+	}
 }
