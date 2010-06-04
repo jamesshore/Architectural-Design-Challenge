@@ -29,28 +29,30 @@ public class _FileSystemTest {
 	@Test
 	public void createFile() throws IOException {
 		assertFalse("assume file doesn't exist", _fileSystem.fileExists(_config, _filename));
-		createFile("foo");
+		createFileContaining("foo");
 		assertTrue("file should be created", _fileSystem.fileExists(_config, _filename));
 	}
 	
 	@Test
 	public void createFile_overwritesExistingFile() throws IOException {
-		createFile("foo");
-		createFile("bar");
+		createFileContaining("foo");
+		createFileContaining("bar");
 		assertEquals("bar", _fileSystem.readFile(_config, _filename));
 	}
 
 	@Test
-	@Ignore
 	public void createFile_obeysConfiguration_thusEverythingDoes() throws IOException {
-		createFile("foo");
+		Transaction tx = new Transaction(Configuration.test());
+		_fileSystem.createFile(tx, "foo", "contents");
+		tx.commit();
+		
 		File fooPath = new File(Configuration.test().workingDirectory(), "foo");
 		assertTrue("'foo' should be created in test working directory", fooPath.exists());
 	}
 	
 	@Test
 	public void deleteFile() throws IOException {
-		createFile("foo");
+		createFileContaining("foo");
 		assertTrue("assume file exists", _fileSystem.fileExists(_config, _filename));
 		deleteFile(_filename);
 		assertFalse("file should be deleted", _fileSystem.fileExists(_config, _filename));
@@ -64,7 +66,7 @@ public class _FileSystemTest {
 	
 	@Test
 	public void readFile() throws IOException {
-		createFile("contents");
+		createFileContaining("contents");
 		assertEquals("contents", _fileSystem.readFile(_config, _filename));
 	}
 	
@@ -75,7 +77,7 @@ public class _FileSystemTest {
 		assertTrue("create operation should be testable", transaction.hasOperation(new FileSystem.CreateOperation("filename", "contents")));
 	}
 
-	private void createFile(String contents) throws IOException {
+	private void createFileContaining(String contents) throws IOException {
 		Transaction transaction = new Transaction(Configuration.test());
 		_fileSystem.createFile(transaction, _filename, contents);
 		transaction.commit();
