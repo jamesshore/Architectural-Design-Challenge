@@ -13,17 +13,17 @@ public class __EndToEndTest {
 	@Before
 	public void setup() throws IOException {
 		_fileSystem = new FileSystem();
-		Transaction tx = new Transaction(_config);
+		Transaction tx = new Transaction();
 		_fileSystem.createFile(tx, "in.txt", "The dog barks at midnight.");
-		tx.commit();
+		tx.commit(_config);
 	}
 	
 	@After
 	public void teardown() throws IOException {
-		Transaction tx = new Transaction(_config);
+		Transaction tx = new Transaction();
 		_fileSystem.deleteFile(tx, _inputFile);
 		_fileSystem.deleteFile(tx, _outputFile);
-		tx.commit();
+		tx.commit(_config);
 	}
 	
 	@Test

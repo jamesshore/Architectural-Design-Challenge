@@ -18,7 +18,7 @@ public class _UITest {
 			public String readFile(Configuration config, String filename) { return "abc"; }
 		};
 		
-		Transaction transaction = new Transaction(Configuration.test());
+		Transaction transaction = new Transaction();
 		String[] args = new String[] { "in.txt", "out.txt" };
 		UI ui = new UI(Configuration.test(), fileSystemStub, _print);
 		ui.go(transaction, args);
@@ -34,7 +34,7 @@ public class _UITest {
 		};
 		
 		UI ui = new UI(Configuration.test(), fileSystemStub, _print);
-		ui.go(new Transaction(Configuration.test()) {}, new String[] { "in", "out" });
+		ui.go(new Transaction() {}, new String[] { "in", "out" });
 		
 		assertEquals("console output", "error message!", _output.toString());
 	}
@@ -42,7 +42,7 @@ public class _UITest {
 	@Test
 	public void go_shouldDisplayUsageForBadCommandLine() throws IOException {
 		UI ui = new UI(Configuration.test(), new FileSystem(), _print);
-		ui.go(new Transaction(Configuration.test()), new String[] {});
+		ui.go(new Transaction(), new String[] {});
 		
 		assertEquals("console output", UI.USAGE, _output.toString());
 	}

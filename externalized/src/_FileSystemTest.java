@@ -42,9 +42,9 @@ public class _FileSystemTest {
 
 	@Test
 	public void createFile_obeysConfiguration_thusEverythingDoes() throws IOException {
-		Transaction tx = new Transaction(Configuration.test());
+		Transaction tx = new Transaction();
 		_fileSystem.createFile(tx, "foo", "contents");
-		tx.commit();
+		tx.commit(Configuration.test());
 		
 		File fooPath = new File(Configuration.test().workingDirectory(), "foo");
 		assertTrue("'foo' should be created in test working directory", fooPath.exists());
@@ -72,20 +72,20 @@ public class _FileSystemTest {
 	
 	@Test
 	public void createOperation_isTestable() {
-		Transaction transaction = new Transaction(Configuration.test());
+		Transaction transaction = new Transaction();
 		_fileSystem.createFile(transaction, "filename", "contents");
 		assertTrue("create operation should be testable", transaction.hasOperation(new FileSystem.CreateOperation("filename", "contents")));
 	}
 
 	private void createFileContaining(String contents) throws IOException {
-		Transaction transaction = new Transaction(Configuration.test());
+		Transaction transaction = new Transaction();
 		_fileSystem.createFile(transaction, _filename, contents);
-		transaction.commit();
+		transaction.commit(Configuration.test());
 	}
 
 	private void deleteFile(String filename) throws IOException {
-		Transaction transaction = new Transaction(Configuration.test());
+		Transaction transaction = new Transaction();
 		_fileSystem.deleteFile(transaction, filename);
-		transaction.commit();
+		transaction.commit(Configuration.test());
 	}
 }

@@ -18,7 +18,7 @@ public class FileSystem {
 
 	public void deleteFile(Transaction transaction, final String filename) {
 		transaction.add(new TransactionOperation() {
-			public void commit() { file(configuration(), filename).delete(); }
+			public void commit(Configuration config) { file(config, filename).delete(); }
 		});
 	}
 
@@ -51,8 +51,8 @@ public class FileSystem {
 			_contents = contents;
 		}
 
-		public void commit() throws IOException {
-			File filename = file(configuration(), _filename);
+		public void commit(Configuration config) throws IOException {
+			File filename = file(config, _filename);
 			BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
 			try {
 				writer.write(_contents);

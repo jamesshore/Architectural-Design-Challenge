@@ -25,7 +25,7 @@ public class _Rot13StringTest {
 
 	@Test
 	public void saveAs() {
-		Transaction transaction = new Transaction(Configuration.test());
+		Transaction transaction = new Transaction();
 		Rot13String string = new Rot13String("abc");
 		string.saveAs(transaction, "out.txt");
 		assertTrue("should queue up save operation", transaction.hasOperation(new FileSystem.CreateOperation("out.txt", "abc")));

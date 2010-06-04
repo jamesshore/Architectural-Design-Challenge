@@ -37,10 +37,10 @@ public class UI {
 	}
 	
 	public static void main(Configuration config, PrintStream out, String[] args) throws IOException {
-		Transaction transaction = new Transaction(config);
+		Transaction transaction = new Transaction();
 		UI ui = new UI(config, new FileSystem(), out);
 		ui.go(transaction, args);
-		transaction.commit();
+		transaction.commit(config);
 	}
 
 }
