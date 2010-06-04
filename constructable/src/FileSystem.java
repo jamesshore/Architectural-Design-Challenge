@@ -41,7 +41,7 @@ public class FileSystem {
 		return new File(filename);
 	}
 
-	public static class CreateOperation implements TransactionOperation {
+	public static class CreateOperation extends TransactionOperation {
 		private final String _filename;
 		private final String _contents;
 

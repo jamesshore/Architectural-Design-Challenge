@@ -5,6 +5,7 @@ import org.junit.*;
 
 
 public class __EndToEndTest {
+	private Configuration _config = Configuration.test();
 	private FileSystem _fileSystem = new FileSystem();
 	private String _inputFile = "in.txt";
 	private String _outputFile = "out.txt";
@@ -12,14 +13,14 @@ public class __EndToEndTest {
 	@Before
 	public void setup() throws IOException {
 		_fileSystem = new FileSystem();
-		Transaction tx = new Transaction();
+		Transaction tx = new Transaction(_config);
 		_fileSystem.createFile(tx, "in.txt", "The dog barks at midnight.");
 		tx.commit();
 	}
 	
 	@After
 	public void teardown() throws IOException {
-		Transaction tx = new Transaction();
+		Transaction tx = new Transaction(_config);
 		_fileSystem.deleteFile(tx, _inputFile);
 		_fileSystem.deleteFile(tx, _outputFile);
 		tx.commit();
