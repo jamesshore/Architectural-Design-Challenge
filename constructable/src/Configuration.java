@@ -3,17 +3,23 @@ import java.io.File;
 
 public class Configuration {
 
+	private File _workingDirectory;
+	
 	public static Configuration production() {
-		return new Configuration();
+		return new Configuration(".");
 	}
 
 	public static Configuration test() {
-		// TODO Auto-generated method stub
-		return null;
+		String tempDir = System.getProperty("java.io.tmpdir");
+		return new Configuration(tempDir);
 	}
 
+	private Configuration(String workingDirectory) {
+		_workingDirectory = new File(workingDirectory);
+	}
+	
 	public File workingDirectory() {
-		return new File(".");
+		return _workingDirectory;
 	}
 
 }

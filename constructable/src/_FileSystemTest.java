@@ -1,6 +1,6 @@
 import static org.junit.Assert.*;
 
-import java.io.IOException;
+import java.io.*;
 
 import org.junit.*;
 
@@ -37,6 +37,13 @@ public class _FileSystemTest {
 		createFile("foo");
 		createFile("bar");
 		assertEquals("bar", _fileSystem.readFile(_filename));
+	}
+
+	@Test
+	public void createFile_obeysConfiguration_thusEverythingDoes() throws IOException {
+		createFile("foo");
+		File fooPath = new File(Configuration.test().workingDirectory(), "foo");
+		assertTrue("'foo' should be created in test working directory", fooPath.exists());
 	}
 	
 	@Test
