@@ -8,6 +8,7 @@ import org.junit.*;
 
 public class _FileSystemTest {
 	private String _filename = "foo.txt";
+	private Configuration _config = Configuration.test();
 	private FileSystem _fileSystem;
 
 	@Before
@@ -16,27 +17,27 @@ public class _FileSystemTest {
 	}
 	
 	@After
-	public void teardown() {
-		_fileSystem.deleteFile(_filename);
+	public void teardown() throws IOException {
+		deleteFile(_filename);
 	}
 	
 	@Test
 	public void fileExists() {
-		assertFalse("file should not exist", _fileSystem.fileExists(_filename));
+		assertFalse("file should not exist", _fileSystem.fileExists(_config, _filename));
 	}
 	
 	@Test
 	public void createFile() throws IOException {
-		assertFalse("assume file doesn't exist", _fileSystem.fileExists(_filename));
+		assertFalse("assume file doesn't exist", _fileSystem.fileExists(_config, _filename));
 		createFile("foo");
-		assertTrue("file should be created", _fileSystem.fileExists(_filename));
+		assertTrue("file should be created", _fileSystem.fileExists(_config, _filename));
 	}
 	
 	@Test
 	public void createFile_overwritesExistingFile() throws IOException {
 		createFile("foo");
 		createFile("bar");
-		assertEquals("bar", _fileSystem.readFile(_filename));
+		assertEquals("bar", _fileSystem.readFile(_config, _filename));
 	}
 
 	@Test
@@ -49,21 +50,21 @@ public class _FileSystemTest {
 	@Test
 	public void deleteFile() throws IOException {
 		createFile("foo");
-		assertTrue("assume file exists", _fileSystem.fileExists(_filename));
-		_fileSystem.deleteFile(_filename);
-		assertFalse("file should be deleted", _fileSystem.fileExists(_filename));
+		assertTrue("assume file exists", _fileSystem.fileExists(_config, _filename));
+		deleteFile(_filename);
+		assertFalse("file should be deleted", _fileSystem.fileExists(_config, _filename));
 	}
 	
 	@Test
-	public void deleteFile_failsSilentlyIfFileDoesNotExist() {
-		_fileSystem.deleteFile(_filename);
-		_fileSystem.deleteFile(_filename);
+	public void deleteFile_failsSilentlyIfFileDoesNotExist() throws IOException {
+		deleteFile(_filename);
+		deleteFile(_filename);
 	}
 	
 	@Test
 	public void readFile() throws IOException {
 		createFile("contents");
-		assertEquals("contents", _fileSystem.readFile(_filename));
+		assertEquals("contents", _fileSystem.readFile(_config, _filename));
 	}
 	
 	@Test
@@ -76,6 +77,12 @@ public class _FileSystemTest {
 	private void createFile(String contents) throws IOException {
 		Transaction transaction = new Transaction();
 		_fileSystem.createFile(transaction, _filename, contents);
+		transaction.commit();
+	}
+
+	private void deleteFile(String filename) throws IOException {
+		Transaction transaction = new Transaction();
+		_fileSystem.deleteFile(transaction, filename);
 		transaction.commit();
 	}
 }

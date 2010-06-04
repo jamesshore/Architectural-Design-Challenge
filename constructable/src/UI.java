@@ -4,10 +4,12 @@ import java.io.*;
 public class UI {
 	public static final String USAGE = "Blah, blah, usage, etc.";
 	
+	private Configuration _config;
 	private FileSystem _fileSystem;
 	private Console _console;
 	
-	public UI(FileSystem fileSystem, PrintStream output) {
+	public UI(Configuration config, FileSystem fileSystem, PrintStream output) {
+		_config = config;
 		_fileSystem = fileSystem;
 		_console = new Console(output);
 	}
@@ -20,7 +22,7 @@ public class UI {
 		}
 		
 		try {
-			Rot13String string = Rot13String.load(_fileSystem, commandLine.inputFilename());
+			Rot13String string = Rot13String.load(_config, _fileSystem, commandLine.inputFilename());
 			string.transform();
 			_console.write(string.toString());
 			string.saveAs(transaction, commandLine.outputFilename());
@@ -31,12 +33,12 @@ public class UI {
 	}
 
 	public static void main(String[] args) throws IOException {
-		main(System.out, args);
+		main(Configuration.production(), System.out, args);
 	}
 	
-	public static void main(PrintStream out, String[] args) throws IOException {
+	public static void main(Configuration config, PrintStream out, String[] args) throws IOException {
 		Transaction transaction = new Transaction();
-		UI ui = new UI(new FileSystem(), out);
+		UI ui = new UI(config, new FileSystem(), out);
 		ui.go(transaction, args);
 		transaction.commit();
 	}

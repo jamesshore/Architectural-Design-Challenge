@@ -5,8 +5,8 @@ public class Rot13String {
 
 	private String _string; 
 
-	public static Rot13String load(FileSystem fileSystem, String filename) throws IOException {
-		return new Rot13String(fileSystem.readFile(filename));
+	public static Rot13String load(Configuration config, FileSystem fileSystem, String filename) throws IOException {
+		return new Rot13String(fileSystem.readFile(config, filename));
 	}
 	
 	public Rot13String(String string) {

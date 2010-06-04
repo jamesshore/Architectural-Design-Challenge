@@ -15,12 +15,12 @@ public class _UITest {
 	@Test
 	public void go() throws IOException {
 		FileSystem fileSystemStub = new FileSystem() {
-			public String readFile(String filename) { return "abc"; }
+			public String readFile(Configuration config, String filename) { return "abc"; }
 		};
 		
 		Transaction transaction = new Transaction();
 		String[] args = new String[] { "in.txt", "out.txt" };
-		UI ui = new UI(fileSystemStub, _print);
+		UI ui = new UI(Configuration.test(), fileSystemStub, _print);
 		ui.go(transaction, args);
 		
 		assertEquals("console output", "nop", _output.toString());
@@ -30,10 +30,10 @@ public class _UITest {
 	@Test
 	public void go_shouldHandleExceptionGracefully() throws IOException {
 		FileSystem fileSystemStub = new FileSystem() {
-			public String readFile(String filename) throws IOException { throw new IOException("error message!"); }
+			public String readFile(Configuration config, String filename) throws IOException { throw new IOException("error message!"); }
 		};
 		
-		UI ui = new UI(fileSystemStub, _print);
+		UI ui = new UI(Configuration.test(), fileSystemStub, _print);
 		ui.go(new Transaction() {}, new String[] { "in", "out" });
 		
 		assertEquals("console output", "error message!", _output.toString());
@@ -41,7 +41,7 @@ public class _UITest {
 	
 	@Test
 	public void go_shouldDisplayUsageForBadCommandLine() throws IOException {
-		UI ui = new UI(new FileSystem(), _print);
+		UI ui = new UI(Configuration.test(), new FileSystem(), _print);
 		ui.go(new Transaction(), new String[] {});
 		
 		assertEquals("console output", UI.USAGE, _output.toString());

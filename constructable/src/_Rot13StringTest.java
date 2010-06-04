@@ -16,9 +16,9 @@ public class _Rot13StringTest {
 	@Test
 	public void load() throws IOException {
 		FileSystem stub = new FileSystem() {
-			public String readFile(String filename) { return "abc"; } 
+			public String readFile(Configuration config, String filename) { return "abc"; } 
 		};
-		Rot13String loaded = Rot13String.load(stub, "yadda");
+		Rot13String loaded = Rot13String.load(Configuration.test(), stub, "yadda");
 					
 		assertEquals(new Rot13String("abc"), loaded);
 	}

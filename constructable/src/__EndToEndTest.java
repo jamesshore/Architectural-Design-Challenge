@@ -12,22 +12,24 @@ public class __EndToEndTest {
 	@Before
 	public void setup() throws IOException {
 		_fileSystem = new FileSystem();
-		Transaction transaction = new Transaction();
-		_fileSystem.createFile(transaction, "in.txt", "The dog barks at midnight.");
-		transaction.commit();
+		Transaction tx = new Transaction();
+		_fileSystem.createFile(tx, "in.txt", "The dog barks at midnight.");
+		tx.commit();
 	}
 	
 	@After
-	public void teardown() {
-		_fileSystem.deleteFile(_inputFile);
-		_fileSystem.deleteFile(_outputFile);
+	public void teardown() throws IOException {
+		Transaction tx = new Transaction();
+		_fileSystem.deleteFile(tx, _inputFile);
+		_fileSystem.deleteFile(tx, _outputFile);
+		tx.commit();
 	}
 	
 	@Test
 	public void smokeTest() throws IOException {
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 		
-		UI.main(new PrintStream(output), new String[] { _inputFile, _outputFile });
-		assertEquals("Gur qbt onexf ng zvqavtug.", _fileSystem.readFile(_outputFile));
+		UI.main(Configuration.test(), new PrintStream(output), new String[] { _inputFile, _outputFile });
+		assertEquals("Gur qbt onexf ng zvqavtug.", _fileSystem.readFile(Configuration.test(), _outputFile));
 	}
 }

@@ -8,22 +8,22 @@ import java.io.IOException;
 
 public class FileSystem {
 
-	public boolean fileExists(String filename) {
-		File file = new File(filename);
-		return file.exists();
+	public boolean fileExists(Configuration configuration, String filename) {
+		return file(filename).exists();
 	}
 
 	public void createFile(Transaction transaction, final String filename, final String contents) {
 		transaction.add(new CreateOperation(filename, contents));
 	}
 
-	public void deleteFile(String filename) {
-		File file = new File(filename);
-		file.delete();		
+	public void deleteFile(Transaction transaction, final String filename) {
+		transaction.add(new TransactionOperation() {
+			public void commit() { file(filename).delete(); }
+		});
 	}
 
-	public String readFile(String filename) throws IOException {
-		BufferedReader reader = new BufferedReader(new FileReader(filename));
+	public String readFile(Configuration configuration, String filename) throws IOException {
+		BufferedReader reader = new BufferedReader(new FileReader(file(filename)));
 		try {
 			String result = "";
 			int character = 0;
@@ -37,6 +37,10 @@ public class FileSystem {
 		}	
 	}
 
+	private static File file(String filename) {
+		return new File(filename);
+	}
+
 	public static class CreateOperation implements TransactionOperation {
 		private final String _filename;
 		private final String _contents;
@@ -47,7 +51,8 @@ public class FileSystem {
 		}
 
 		public void commit() throws IOException {
-			BufferedWriter writer = new BufferedWriter(new FileWriter(_filename));
+			File filename = file(_filename);
+			BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
 			try {
 				writer.write(_contents);
 			}
